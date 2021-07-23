@@ -60,3 +60,27 @@ footer p {
     white-space: pre-wrap;
     word-break: break-word;
 }
+
+.note-date {
+    color: rgb(179, 178, 178);
+    font-size: .8em !important;
+    float: right;
+}
+
+.note-icon {
+    float: right;
+}
+
+svg {
+    font-size: larger;
+    margin: 3px;
+}
+
+.note-foot {
+    color: #ccc;
+    font-size: .8em;
+}
+
+.note-foot p {
+    margin-bottom: 2px;
+}
