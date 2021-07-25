@@ -1,20 +1,60 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions,status
 from rest_framework.response import Response
 from .serializers import UserSerializer, RegisterSerializer
-from django.contrib.auth import login
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from rest_framework.authtoken.models import Token
+from accounts.models import User
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, LogoutSerializer
+from rest_framework.permissions import IsAuthenticated
 
-# Register API
-class RegisterAPI(generics.CreateAPIView):
-    queryset = User.objects.all()
+class RegisterView(generics.GenericAPIView):
+
     serializer_class = RegisterSerializer
 
+    def post(self, request):
+        user = request.data
+        serializer = self.serializer_class(data=user)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        user_data = serializer.data
+        return Response(user_data, status=status.HTTP_201_CREATED)
+
+
+
+
+class LoginAPIView(generics.GenericAPIView):
+    serializer_class = LoginSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class OwnerListView(generics.ListAPIView):
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        """Returns only the object related to current user"""
+        user = self.request.user
+        return User.objects.filter(email=user)
+
+
+class OwnerUpdateRetriveDeleteView(generics.RetrieveUpdateDestroyAPIView):
+    queryset            = User.objects.all()
+    serializer_class    = UserSerializer
+
+    permission_classes  = (IsAuthenticated,)
+
     
-@receiver(post_save, sender=User)
-def create_auth_token(sender, instance=None, created=False, **kwargs):
-    """Creates token when a new Retailer is created"""
-    if created:
-        Token.objects.create(user=instance)
+
+class LogoutAPIView(generics.GenericAPIView):
+    serializer_class = LogoutSerializer
+
+    permission_classes = [permissions.IsAuthenticated,]
+
+    def post(self, request):
+
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        # serializer.save()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
