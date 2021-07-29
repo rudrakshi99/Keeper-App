@@ -3,7 +3,7 @@ import { Grid,Paper, Avatar, TextField, Button, Typography } from '@material-ui/
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {Header} from './Header'
 import {Footer} from './Footer'
-import { Link } from 'react-router-dom'
+import { Link , useHistory} from 'react-router-dom'
 import axios from 'axios';
 
 export const LoginForm = () => {
@@ -13,7 +13,8 @@ export const LoginForm = () => {
     })
     
     const [error, setError] = useState("")
-
+    
+    const history = useHistory()
     const handleChange = (event) => {
         const {name, value} = event.target;
         setDetails(preDetail => {
@@ -33,7 +34,11 @@ export const LoginForm = () => {
         };
         console.log("k")
         axios.post(`http://127.0.0.1:8000/api/accounts/login/`, login_details)
-            .then((response) => console.log("l"))
+            .then((response) => {
+            localStorage.setItem("refresh", response.data.tokens.refresh)   
+            localStorage.setItem("access", response.data.tokens.access)
+            history.push('/main')
+        })
             .catch(setError("Please check your details!"),(err)=>console.log(err))
     }
 

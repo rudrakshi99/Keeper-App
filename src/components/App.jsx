@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import { LoginForm } from './LoginForm'
 import { Main } from './Main'
 import { RegisterForm } from './RegisterForm'
