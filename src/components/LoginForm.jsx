@@ -4,12 +4,15 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {Header} from './Header'
 import {Footer} from './Footer'
 import { Link } from 'react-router-dom'
+import axios from 'axios';
 
-export const LoginForm = ({Login, error}) => {
+export const LoginForm = () => {
     const [details, setDetails] = useState({
         email : '',
         password : ''
     })
+    
+    const [error, setError] = useState("")
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -23,8 +26,15 @@ export const LoginForm = ({Login, error}) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        Login(details)
+        const login_details = { 
+            email : details.email,
+            password : details.password
 
+        };
+        console.log("k")
+        axios.post(`http://127.0.0.1:8000/api/accounts/login/`, login_details)
+            .then((response) => console.log("l"))
+            .catch(setError("Please check your details!"),(err)=>console.log(err))
     }
 
     const paperStyle={
@@ -51,7 +61,7 @@ export const LoginForm = ({Login, error}) => {
                         <Avatar style={avatarStyle}><LockOutlinedIcon/></Avatar>
                         <h2>Sign In</h2>
                     </Grid>
-                    {(error != "") && ( <div>{error}</div>)}
+                    {(error != "") && ( <div style={{ color : 'red' }}>{error}</div>)}
                     <TextField style={{margin :'6px 0'}} label='Email' 
                     name='email'
                     value={details.email} 
@@ -67,7 +77,7 @@ export const LoginForm = ({Login, error}) => {
                     type='password' 
                     fullWidth required/>
                     
-                    <Button type='submit' onSubmit={submitHandler} variant="contained" style={btnstyle} fullWidth>Sign in</Button>
+                    <Button type='submit' onClick={submitHandler} variant="contained" style={btnstyle} fullWidth>Sign in</Button>
                     
                     <Typography > Do you have an account ?
                         <Link to="/register" >

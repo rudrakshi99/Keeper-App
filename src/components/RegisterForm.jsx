@@ -1,11 +1,56 @@
-import React from 'react'
+import React , {useState} from 'react'
 import { Grid, Paper, Avatar, Typography, TextField, Button } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import { Header } from './Header'
 import { Footer } from './Footer'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import axios from 'axios';
 
 export const RegisterForm = () => {
+    const history = useHistory()
+    const [details, setDetails] = useState({
+        username : '',
+        email : '',
+        password : '',
+        confirmpassword : ''
+    })
+    
+    const [error, setError] = useState("")
+
+    const handleChange = (event) => {
+        const {name, value} = event.target;
+        setDetails(preDetail => {
+            return {
+                ...preDetail,
+                [name]: value
+            };
+        });
+    }
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        console.log(details)
+        const register_details = { 
+            username : details.username, 
+            email : details.email,
+            password : details.password
+
+        };
+        
+        if(details.password === details.confirmpassword){
+            axios.post(`http://127.0.0.1:8000/api/accounts/register/`, register_details)
+            .then(() => history.goBack())
+            .catch(setError("Something went wrong!"),(err)=>console.log(err))
+        }else{
+            if((details.password).length < 6){
+                setError("Password should contains at least 6 characters.")
+            }else{
+                setError("Please check your password.")
+            }
+        }
+
+    }
+
     const paperStyle = { 
         padding: 20, 
         width: 500, 
@@ -27,8 +72,9 @@ export const RegisterForm = () => {
         backgroundColor :'#f5ba13',
         color : 'white' 
     }
-
+    
     return (
+
         <div>
             <Header />
         <Grid>
@@ -40,13 +86,37 @@ export const RegisterForm = () => {
                     <h2 style={headerStyle}>Sign Up</h2>
                     <Typography variant='caption' gutterBottom>Please fill this form to create an account !</Typography>
                 </Grid>
-                
-                    <TextField fullWidth style={{margin :'10px 0'}} label='Name' placeholder="Enter your name" />
-                    <TextField fullWidth style={{margin :'10px 0'}} label='Email' placeholder="Enter your email" />
-                    <TextField fullWidth style={{margin :'10px 0'}} label='Password' placeholder="Enter your password"/>
-                    <TextField fullWidth style={{margin :'10px 0'}} label='Confirm Password' placeholder="Confirm your password"/>
+                    {(error != "") && ( <div style={{color : 'red'}}>{error}</div>)}    
+                    <TextField fullWidth style={{margin :'10px 0'}} label='Name'
+                    name='username'
+                    value={details.username} 
+                    onChange={handleChange}
+                    placeholder="Enter your name" />
+
+                    <TextField fullWidth style={{margin :'10px 0'}} label='Email' 
+                    name='email'
+                    value={details.email} 
+                    onChange={handleChange}
+                    placeholder="Enter your email" />
+
+                    <TextField fullWidth style={{margin :'10px 0'}} label='Password' 
+                    name='password'
+                    type='password' 
+                    value={details.password} 
+                    onChange={handleChange}
+                    placeholder="Enter your password"/>
+
+                    <TextField fullWidth style={{margin :'10px 0'}} label='Confirm Password' 
+                    name='confirmpassword'
+                    type='password' 
+                    value={details.confirmpassword} 
+                    onChange={handleChange}
+
+                    placeholder="Confirm your password"/>
                     
-                    <Button type='submit' style={btnstyle} variant='contained' color='primary'>Sign up</Button>
+                    <Button type='submit' onClick={submitHandler} style={btnstyle} variant='contained' color='primary'>
+                        Sign up
+                    </Button>
                 
 
                 <Typography > Already Registered ?
