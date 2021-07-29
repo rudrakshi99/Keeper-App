@@ -19,6 +19,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         password = attrs.get('password', '')
         try:
             validate_email( email )
+            if len(password) < 6:
+                raise ParseError('Ensure this field has at least 6 characters.')    
+
             return attrs
 
         except ValidationError:
