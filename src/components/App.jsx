@@ -11,7 +11,7 @@ export const App = () => {
             <Route exact path="/" component={LoginForm}/>
             <Route exact path="/main" component={Main}/>
             <Route exact path="/register" component={RegisterForm}/>
-
+            <Route path="*" component={LoginForm}/>
         </Switch>
     )
 }
