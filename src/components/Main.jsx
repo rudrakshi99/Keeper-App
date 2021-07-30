@@ -34,9 +34,9 @@ export const Main = () => {
                     console.log(err.config)
                     err.config.headers['Authorization'] = 'Bearer ' + res.access;
                     localStorage.setItem('access', res.access)
-                    return axios.request(err.config);
+                    // return axios.request(err.config);
 
-                    // return axios(originalRequest)
+                    //  return axios(originalRequest)
                   })
                 // resolve(response)
               }
@@ -48,7 +48,7 @@ export const Main = () => {
       );
       
     
-    function addNote(note){
+      const addNote = (note) => {
         console.log("fffffff")
         
         const headers = { 
