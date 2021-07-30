@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
-import { Grid,Paper, Avatar, TextField, Button, Typography } from '@material-ui/core'
+import React, { useState } from 'react'
+import { Grid, Paper, Avatar, TextField, Button, Typography } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import {Header} from './Header'
-import {Footer} from './Footer'
-import { Link , useHistory} from 'react-router-dom'
+import { Header } from './Header'
+import { Footer } from './Footer'
+import { Link , useHistory } from 'react-router-dom'
 import axios from 'axios';
 
 export const LoginForm = () => {

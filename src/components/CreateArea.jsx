@@ -1,7 +1,7 @@
-import React, { useState} from 'react'
-import {FaPlus} from 'react-icons/fa'
+import React, { useState } from 'react'
+import { FaPlus } from 'react-icons/fa'
 import Fab from '@material-ui/core/Fab';
-import {Zoom} from '@material-ui/core';
+import { Zoom } from '@material-ui/core';
 
 export const CreateArea = (props) => {
     const [isOpen, setIsOpen] = useState(false);

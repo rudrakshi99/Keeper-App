@@ -1,5 +1,5 @@
 import React from 'react'
-import {FaFeatherAlt} from 'react-icons/fa';
+import { FaFeatherAlt } from 'react-icons/fa';
 
 export const Header = () => {
     return (

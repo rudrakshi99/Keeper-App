@@ -1,5 +1,5 @@
 import React from 'react'
-import {FaTrash, FaPen} from 'react-icons/fa';
+import { FaTrash, FaPen } from 'react-icons/fa';
 
 export const Note = ({note}) => {
     console.log(note)

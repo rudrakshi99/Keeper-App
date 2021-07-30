@@ -1,4 +1,4 @@
-import React , {useState} from 'react'
+import React , { useState } from 'react'
 import { Grid, Paper, Avatar, Typography, TextField, Button } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import { Header } from './Header'
@@ -42,11 +42,8 @@ export const RegisterForm = () => {
             .then(() => history.goBack())
             .catch(setError("Something went wrong!"),(err)=>console.log(err))
         }else{
-            if((details.password).length < 6){
-                setError("Password should contains at least 6 characters.")
-            }else{
-                setError("Please check your password.")
-            }
+            ((details.password).length < 6) ? setError("Password must be at least 6 characters long!") :
+                                              setError("Passwords do not match!"); 
         }
 
     }
