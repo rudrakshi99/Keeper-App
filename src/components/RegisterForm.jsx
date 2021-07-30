@@ -61,9 +61,7 @@ export const RegisterForm = () => {
     const avatarStyle = { 
         backgroundColor: '#f5ba13' 
     }
-    const marginTop = { 
-        marginTop: 5 
-    }
+    
     const btnstyle={
         margin:'8px 0',
         backgroundColor :'#f5ba13',
@@ -83,7 +81,7 @@ export const RegisterForm = () => {
                     <h2 style={headerStyle}>Sign Up</h2>
                     <Typography variant='caption' gutterBottom>Please fill this form to create an account !</Typography>
                 </Grid>
-                    {(error != "") && ( <div style={{color : 'red'}}>{error}</div>)}    
+                    {(error !== "") && ( <div style={{color : 'red'}}>{error}</div>)}    
                     <TextField fullWidth style={{margin :'10px 0'}} label='Name'
                     name='username'
                     value={details.username} 

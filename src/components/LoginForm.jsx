@@ -66,7 +66,7 @@ export const LoginForm = () => {
                         <Avatar style={avatarStyle}><LockOutlinedIcon/></Avatar>
                         <h2>Sign In</h2>
                     </Grid>
-                    {(error != "") && ( <div style={{ color : 'red' }}>{error}</div>)}
+                    {(error !== "") && ( <div style={{ color : 'red' }}>{error}</div>)}
                     <TextField style={{margin :'6px 0'}} label='Email' 
                     name='email'
                     value={details.email} 

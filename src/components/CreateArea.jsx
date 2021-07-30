@@ -23,8 +23,7 @@ export const CreateArea = (props) => {
     function submitNote(event) {
         event.preventDefault();
 
-        props.onAddNote(note);
-        console.log(note);
+        props.onAdd(note);
     }
 
     function expand() {
@@ -44,11 +43,12 @@ export const CreateArea = (props) => {
     return (
         <div>
             <form>
-                { isOpen && <input name="title" value = {note.title} placeholder="Title" />}
+                { isOpen && <input name="title" value = {note.title} onChange={handleChange} placeholder="Title" />}
                 <textarea 
                 name="text" 
                 onClick = {expand}
                 value = {note.text}
+                onChange={handleChange}
                 placeholder="Take a note ..." 
                 rows={isOpen ? 3 : 1}/>
                 <Zoom in={isOpen}>
