@@ -35,9 +35,11 @@ class NoteCreateAPIView(CreateAPIView):
     permission_classes = [IsAuthenticated]
     
     def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)                 
+        serializer = self.get_serializer(data=request.data) 
+                  
         if serializer.is_valid():
             serializer.save(user=self.request.user)
+            print('bbb')
             return Response(serializer.data, status=status.HTTP_201_CREATED)   # successfully CREATED
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) # invalid data
     
