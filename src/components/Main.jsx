@@ -23,7 +23,7 @@ export const Main = () => {
     axios.interceptors.response.use(undefined,         
       function axiosRetryInspector(err)  {
           const refreshToken = localStorage.getItem('refresh')
-          if (err.response.status === 401 && err.response.data.detail === 'Authentication credentials were not provided.') {
+          if (err.response.status === 401) {
             console.log("ooo")
             axios.post(`http://localhost:8000/api/accounts/token/refresh/`, {
               refresh: refreshToken
@@ -33,11 +33,9 @@ export const Main = () => {
                 console.log(err.config)
                 err.config.headers['Authorization'] = 'Bearer ' + res.access;
                 localStorage.setItem('access', res.access)
-                // return axios.request(err.config);
+                return axios.request(err.config);
 
-                //  return axios(originalRequest)
               })
-            // resolve(response)
           }
     
           return Promise.reject(err)
