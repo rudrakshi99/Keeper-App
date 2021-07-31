@@ -57,11 +57,24 @@ export const Main = () => {
         setNotes([...notes, note])
     }
     
+    const deleteNote = (id) => {
+      const headers = { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('access')
+        }
+        axios.delete(`http://127.0.0.1:8000/api/notes/${id}/`, { headers })
+        .then(res=> res.data)
+        .catch(err=>console.log(err))
+
+        setNotes(notes.filter(note=>note.id !== id))
+
+    }
+
     return (
         <div>
             <Header />
             <CreateArea onAdd={addNote} />
-            <Notes notes={notes} />
+            <Notes notes={notes} onDelete={deleteNote} />
             <Footer />
         </div>
     )

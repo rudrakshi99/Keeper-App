@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaTrash, FaPen } from 'react-icons/fa';
 
-export const Note = ({note}) => {
+export const Note = ({note , onDelete}) => {
     return (
     
         <div className="note">
@@ -13,7 +13,7 @@ export const Note = ({note}) => {
                 <p>Updated at: {note.updated_at}</p>
                 <div className="note-icon">
                     <FaPen />
-                    <FaTrash />
+                    <FaTrash onClick={()=> onDelete(note.id)} />
                 </div>
 
             </div>
