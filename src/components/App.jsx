@@ -1,6 +1,6 @@
-import { LoginForm } from './LoginForm'
+import { LoginForm } from './account/LoginForm'
 import { Main } from './Main'
-import { RegisterForm } from './RegisterForm'
+import { RegisterForm } from './account/RegisterForm'
 import { Switch, Route } from 'react-router-dom'
 
 export const App = () => {

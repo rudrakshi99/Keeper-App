@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaTrash, FaPen } from 'react-icons/fa';
 
-export const Note = ({note , onDelete}) => {
+export const Note = ({note , onDelete, OpenPopup, setUpdateId }) => {
     return (
     
         <div className="note">
@@ -12,7 +12,10 @@ export const Note = ({note , onDelete}) => {
             <div className="note-foot">
                 <p>Updated at: {note.updated_at}</p>
                 <div className="note-icon">
-                    <FaPen />
+                    <FaPen onClick={()=> {
+                        OpenPopup(); 
+                        setUpdateId(note.id)}
+                        } />
                     <FaTrash onClick={()=> onDelete(note.id)} />
                 </div>
 

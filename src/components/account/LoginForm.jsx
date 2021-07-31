@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Grid, Paper, Avatar, TextField, Button, Typography } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { Header } from './Header'
-import { Footer } from './Footer'
+import { Header } from '../pages/Header'
+import { Footer } from '../pages/Footer'
 import { Link , useHistory } from 'react-router-dom'
 import axios from 'axios';
 
@@ -35,6 +35,7 @@ export const LoginForm = () => {
         console.log("k")
         axios.post(`http://127.0.0.1:8000/api/accounts/login/`, login_details)
             .then((response) => {
+            localStorage.setItem("username", response.data.username)
             localStorage.setItem("refresh", response.data.tokens.refresh)   
             localStorage.setItem("access", response.data.tokens.access)
             history.push('/main')

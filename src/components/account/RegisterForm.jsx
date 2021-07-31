@@ -1,8 +1,8 @@
 import React , { useState } from 'react'
 import { Grid, Paper, Avatar, Typography, TextField, Button } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-import { Header } from './Header'
-import { Footer } from './Footer'
+import { Header } from '../pages/Header'
+import { Footer } from '../pages/Footer'
 import { Link, useHistory } from 'react-router-dom'
 import axios from 'axios';
 
