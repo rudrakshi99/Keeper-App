@@ -6,21 +6,26 @@ import axios from 'axios'
 import { CreateArea } from './pages/CreateArea'
 import { useHistory } from 'react-router-dom'
 import  FormDialog  from './pages/Popup'
+import { Loading } from './pages/Loading'
 
 export const Main = () => {
     const history = useHistory()
     const [notes, setNotes] = useState([])
-     
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(()=>{
         const getNotes = () => {
+          setIsLoading(false)
           const headers = { 
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('access')
           }
 
             axios.get(`http://127.0.0.1:8000/api/notes/` , {headers} )
-            .then((res)=>{ setNotes(res.data)})
+            .then((res)=>{ 
+              setNotes(res.data)
+              setIsLoading(true)
+            })
             .catch(err=>console.log(err))
         }
         
@@ -113,9 +118,9 @@ export const Main = () => {
         <div>
             <Header />
             <CreateArea onAdd={addNote} />
-            <Notes notes={notes} onDelete={deleteNote} OpenPopup={handleClickOpen} 
+            { !isLoading ? <Loading /> : <Notes notes={notes} onDelete={deleteNote} OpenPopup={handleClickOpen} 
                 setUpdateId={setUpdateId}
-            />
+            />}
             <FormDialog open={open} setOpen={setOpen} updateNote={updateNote} />
             <Footer />
         </div>
