@@ -1,4 +1,4 @@
-import React , { useState } from 'react'
+import React , { useState , useEffect } from 'react'
 import { Grid, Paper, Avatar, Typography, TextField, Button } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import { Header } from '../pages/Header'
@@ -8,6 +8,12 @@ import axios from 'axios';
 
 export const RegisterForm = () => {
     const history = useHistory()
+
+    useEffect(() => {
+        localStorage.getItem('refresh') && history.push('/main')
+
+    } , [])
+    
     const [details, setDetails] = useState({
         username : '',
         email : '',

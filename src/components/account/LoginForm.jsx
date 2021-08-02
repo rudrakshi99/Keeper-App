@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import { Grid, Paper, Avatar, TextField, Button, Typography } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Header } from '../pages/Header'
@@ -12,9 +12,15 @@ export const LoginForm = () => {
         password : ''
     })
     
+    const history = useHistory()
+
+    useEffect(() => {
+        localStorage.getItem('refresh') && history.push('/main')
+
+    } , [])
+    
     const [error, setError] = useState("")
     
-    const history = useHistory()
     const handleChange = (event) => {
         const {name, value} = event.target;
         setDetails(preDetail => {
