@@ -13,9 +13,13 @@ export const Main = () => {
      
 
     useEffect(()=>{
-      
         const getNotes = () => {
-            axios.get(`http://127.0.0.1:8000/api/notes/`)
+          const headers = { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('access')
+          }
+
+            axios.get(`http://127.0.0.1:8000/api/notes/` , {headers} )
             .then((res)=>{ setNotes(res.data)})
             .catch(err=>console.log(err))
         }
@@ -35,7 +39,7 @@ export const Main = () => {
               .then((res) => res.data)
               .then((res) => {
                 
-                console.log(err.config)
+                // console.log(err.config)
                 err.config.headers['Authorization'] = 'Bearer ' + res.access;
                 localStorage.setItem('access', res.access)
                 return axios.request(err.config);
@@ -52,7 +56,7 @@ export const Main = () => {
       
     
       const addNote = (note) => {
-        console.log("fffffff")        
+        // console.log("fffffff")        
         const headers = { 
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('access')
@@ -81,7 +85,7 @@ export const Main = () => {
     const updateNote = (note) => {
       console.log(updateId, 'updateId')
       console.log(note, 'note')
-      if(note.title!=='' && note.text!==''){
+      if(note.title!=='' || note.text!==''){
       const headers = { 
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('access')
@@ -89,7 +93,7 @@ export const Main = () => {
         axios.put(`http://127.0.0.1:8000/api/notes/${updateId}/`, note , { headers })
         .then(res=> res.data)
         .catch(err=>console.log(err))
-
+        // setNotes(notes.map(note=>note.id === updateId ? note = note : note))
         setNotes(notes.filter(note=>note.id !== updateId))
         window.location.reload();
 

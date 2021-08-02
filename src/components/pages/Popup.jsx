@@ -1,6 +1,7 @@
 import React , { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -40,15 +41,18 @@ export default function FormDialog(prop) {
             margin="dense"
             name="title"
             value = {note.title} 
+            placeholder="Add title"
             onChange={handleChange}
             label="Title"
             fullWidth
           />
-          <TextField
+          <TextareaAutosize
             autoFocus
             margin="dense"
             name="text"
             value = {note.text}
+            aria-label="minimum height" minRows={3} 
+            placeholder="Add content"
             onChange={handleChange}
             label="Content"
             fullWidth
