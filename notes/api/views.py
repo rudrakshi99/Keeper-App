@@ -7,26 +7,18 @@ from django.http import HttpResponse
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import  IsAuthenticated
 from accounts.api.permissions import UserPermission
-from .filters import NoteFilter
-from django.db.models import Q
 
 class NoteListAPIView(ListAPIView):
     # queryset = Note.objects.all()
     serializer_class = NoteSerializer
-    filterset_fields     = ('id','title', 'created_at', 'updated_at','date_gt', 'date_lt',)
-    filter_class = NoteFilter
     
+    permission_classes = [IsAuthenticated]
+
     def get_queryset(self, *args, **kwargs):
-        queryset_list = Note.objects.all()
-        query = self.request.GET.get("q")
-        if query:
-            queryset_list = queryset_list.filter(
-                Q(title__icontains=query)|
-                Q(user__username__icontains=query)|
-                Q(created_at__icontains=query)|
-                Q(updated_at__icontains=query))
-        return queryset_list         
-                
+        user = self.request.user
+        return Note.objects.filter(email=user)
+
+        
 
 class NoteCreateAPIView(CreateAPIView):
     queryset = Note.objects.all()
