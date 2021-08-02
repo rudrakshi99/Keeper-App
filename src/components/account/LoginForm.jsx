@@ -5,13 +5,14 @@ import { Header } from '../pages/Header'
 import { Footer } from '../pages/Footer'
 import { Link , useHistory } from 'react-router-dom'
 import axios from 'axios';
+import { Loading } from '../pages/Loading'
 
 export const LoginForm = () => {
     const [details, setDetails] = useState({
         email : '',
         password : ''
     })
-    
+    const [isLoading, setIsLoading] = useState(true)
     const history = useHistory()
 
     useEffect(() => {
@@ -33,20 +34,22 @@ export const LoginForm = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        setIsLoading(false)
         const login_details = { 
             email : details.email,
             password : details.password
 
         };
         console.log("k")
-        axios.post(`http://127.0.0.1:8000/api/accounts/login/`, login_details)
+         axios.post(`http://127.0.0.1:8000/api/accounts/login/`, login_details)
             .then((response) => {
             localStorage.setItem("username", response.data.username)
             localStorage.setItem("refresh", response.data.tokens.refresh)   
             localStorage.setItem("access", response.data.tokens.access)
             history.push('/main')
         })
-            .catch(setError("Please check your details!"),(err)=>console.log(err))
+            .catch((err)=>setError("Please check your details!"))
+            
     }
 
     const paperStyle={
@@ -67,6 +70,7 @@ export const LoginForm = () => {
     return (
         <div>
             <Header />
+            {!isLoading ? <Loading /> : 
             <Grid>
                 <Paper elevation={10} style={paperStyle}>
                     <Grid align='center'>
@@ -97,7 +101,7 @@ export const LoginForm = () => {
                     </Link>
                     </Typography>
                 </Paper>
-            </Grid>
+            </Grid>}
             <Footer />
     </div>
     )

@@ -27,9 +27,9 @@ export const Main = () => {
               setIsLoading(true)
             })
             .catch(err=>console.log(err))
-        }
+          }
+          getNotes()
         
-        getNotes()
     },[])
 
     axios.interceptors.response.use(undefined,         
@@ -61,17 +61,21 @@ export const Main = () => {
       
     
       const addNote = (note) => {
-        // console.log("fffffff")        
+        // console.log("fffffff")    
+        setIsLoading(false)    
         const headers = { 
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('access')
         }
         console.log(headers)
         axios.post(`http://127.0.0.1:8000/api/notes/create/`, note, { headers } )
-        .then(res=> res.json())
+        .then(()=> {
+        window.location.reload()})
         .catch(err=>console.log(err))
         
-        setNotes([...notes, note])
+        // setNotes([...notes, note])
+        
+
     }
     
     const deleteNote = (id) => {
@@ -89,20 +93,28 @@ export const Main = () => {
     
     const updateNote = (note) => {
       console.log(updateId, 'updateId')
-      console.log(note, 'note')
-      if(note.title!=='' || note.text!==''){
-      const headers = { 
+      setOpen(false);
+      setIsLoading(false) 
+
+       const headers = { 
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('access')
         }
         axios.put(`http://127.0.0.1:8000/api/notes/${updateId}/`, note , { headers })
-        .then(res=> res.data)
+        .then((res) => {
+          // setIsLoading(true) 
+          console.log(note, 'note') 
+          window.location.reload();
+          
+        })
         .catch(err=>console.log(err))
+      
         // setNotes(notes.map(note=>note.id === updateId ? note = note : note))
-        setNotes(notes.filter(note=>note.id !== updateId))
-        window.location.reload();
+        // setNotes(notes.filter(note=>note.id !== updateId))
+        console.log("kk")
+        
 
-      }
+      
     }
 
     const [open, setOpen] = useState(false);

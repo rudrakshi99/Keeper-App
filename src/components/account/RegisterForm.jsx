@@ -5,10 +5,11 @@ import { Header } from '../pages/Header'
 import { Footer } from '../pages/Footer'
 import { Link, useHistory } from 'react-router-dom'
 import axios from 'axios';
+import { Loading } from '../pages/Loading'
 
 export const RegisterForm = () => {
     const history = useHistory()
-
+    const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
         localStorage.getItem('refresh') && history.push('/main')
 
@@ -35,6 +36,7 @@ export const RegisterForm = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        setIsLoading(false)
         console.log(details)
         const register_details = { 
             username : details.username, 
@@ -45,8 +47,10 @@ export const RegisterForm = () => {
         
         if(details.password === details.confirmpassword){
             axios.post(`http://127.0.0.1:8000/api/accounts/register/`, register_details)
-            .then(() => history.goBack())
-            .catch(setError("Something went wrong!"),(err)=>console.log(err))
+            .then(() =>{ 
+                setIsLoading(true)
+                history.goBack()})
+            .catch((err)=>setError("Something went wrong!"))
         }else{
             ((details.password).length < 6) ? setError("Password must be at least 6 characters long!") :
                                               setError("Passwords do not match!"); 
@@ -78,6 +82,7 @@ export const RegisterForm = () => {
 
         <div>
             <Header />
+            { !isLoading ? <Loading /> :
         <Grid>
             <Paper elevation={10} style={paperStyle}>
                 <Grid align='center'>
@@ -92,12 +97,14 @@ export const RegisterForm = () => {
                     name='username'
                     value={details.username} 
                     onChange={handleChange}
+                    required
                     placeholder="Enter your name" />
 
                     <TextField fullWidth style={{margin :'10px 0'}} label='Email' 
                     name='email'
                     value={details.email} 
                     onChange={handleChange}
+                    required
                     placeholder="Enter your email" />
 
                     <TextField fullWidth style={{margin :'10px 0'}} label='Password' 
@@ -105,6 +112,7 @@ export const RegisterForm = () => {
                     type='password' 
                     value={details.password} 
                     onChange={handleChange}
+                    required
                     placeholder="Enter your password"/>
 
                     <TextField fullWidth style={{margin :'10px 0'}} label='Confirm Password' 
@@ -112,7 +120,7 @@ export const RegisterForm = () => {
                     type='password' 
                     value={details.confirmpassword} 
                     onChange={handleChange}
-
+                    required
                     placeholder="Confirm your password"/>
                     
                     <Button type='submit' onClick={submitHandler} style={btnstyle} variant='contained' color='primary'>
@@ -127,6 +135,7 @@ export const RegisterForm = () => {
                 </Typography>
             </Paper>
         </Grid>
+        }
         <Footer />
         </div>
     )

@@ -1,12 +1,12 @@
 import React from 'react'
 import Lottie from 'react-lottie'
-import animationData from './dots.json'
+import  * as animationData from '../LoaderAnimation/animation.json'
 
 
 const defaultOptions = {
   loop: true,
   autoplay: true,
-  animationData: animationData,
+  animationData: animationData.default,
   rendererSettings: {
     preserveAspectRatio: 'xMidYMid slice'
   }
@@ -16,7 +16,7 @@ const defaultOptions = {
 export const Loading = () => {
     return (
         <div style={{marginTop: '10rem'}}>
-            <Lottie options={defaultOptions} height={120} width={120} />
+            <Lottie options={defaultOptions} height={150} width={150} />
         </div>
     )
 }

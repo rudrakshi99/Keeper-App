@@ -55,7 +55,7 @@ export default function FormDialog(prop) {
             placeholder="Add content"
             onChange={handleChange}
             label="Content"
-            fullWidth
+            // fullWidth
           />
         </DialogContent>
         <DialogActions>
