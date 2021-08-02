@@ -16,7 +16,7 @@ class NoteListAPIView(ListAPIView):
 
     def get_queryset(self, *args, **kwargs):
         user = self.request.user
-        return Note.objects.filter(email=user)
+        return Note.objects.filter(user=user)
 
         
 
