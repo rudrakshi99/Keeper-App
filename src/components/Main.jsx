@@ -117,6 +117,27 @@ export const Main = () => {
       
     }
 
+    const logout = () => {
+
+      const token = {
+        'refresh' : localStorage.getItem('refresh')
+      }
+      const headers = { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('access')
+        }
+      axios.post('http://localhost:8000/api/accounts/logout/', token , { headers })
+      .then(()=>{
+
+        localStorage.removeItem('access')
+        localStorage.removeItem('refresh')
+        localStorage.removeItem('username')
+        history.push('/')
+      })
+      .catch(err=>console.log(err))
+    }
+
+
     const [open, setOpen] = useState(false);
     const [updateId, setUpdateId] = useState('');
 
@@ -128,7 +149,7 @@ export const Main = () => {
 
     return (
         <div>
-            <Header />
+            <Header logout={logout}/>
             <CreateArea onAdd={addNote} />
             { !isLoading ? <Loading /> : <Notes notes={notes} onDelete={deleteNote} OpenPopup={handleClickOpen} 
                 setUpdateId={setUpdateId}

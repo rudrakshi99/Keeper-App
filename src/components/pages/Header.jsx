@@ -2,7 +2,7 @@ import React from 'react'
 import { FaFeatherAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom'
 
-export const Header = () => {
+export const Header = ({ logout }) => {
     return (
         <header>
              <h1>
@@ -15,9 +15,7 @@ export const Header = () => {
                     <Link to='/'>
                         <p onClick={()=>
                         {
-                            localStorage.removeItem('access')
-                            localStorage.removeItem('refresh')
-                            localStorage.removeItem('username')
+                            logout()
                         }}>  Logout </p>
                     </Link>
                  </div>
