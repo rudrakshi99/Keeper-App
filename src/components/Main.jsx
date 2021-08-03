@@ -22,7 +22,7 @@ export const Main = () => {
         Authorization: "Bearer " + localStorage.getItem("access"),
       };
       axios
-        .get(`http://127.0.0.1:8000/api/notes/`, { headers })
+        .get(`https://rudrakshi-keeper-app.herokuapp.com/api/notes/`, { headers })
         .then((res) => {
             setIsLoading(false);
           setNotes(res.data);          
@@ -37,7 +37,7 @@ export const Main = () => {
     console.log(refreshToken);
     if (err.response.status === 401 && refreshToken) {      
       axios
-        .post(`http://localhost:8000/api/accounts/token/refresh/`, {
+        .post(`https://rudrakshi-keeper-app.herokuapp.com/api/accounts/token/refresh/`, {
           refresh: refreshToken,
         })
         .then((res) => res.data)
@@ -59,7 +59,7 @@ export const Main = () => {
       Authorization: "Bearer " + localStorage.getItem("access"),
     };
     axios
-      .post(`http://127.0.0.1:8000/api/notes/create/`, note, { headers })
+      .post(`https://rudrakshi-keeper-app.herokuapp.com/api/notes/create/`, note, { headers })
       .then((res) => {
         // setNotes([...notes, note])
         setResponse(res.data);
@@ -76,7 +76,7 @@ export const Main = () => {
       Authorization: "Bearer " + localStorage.getItem("access"),
     };
     axios
-      .delete(`http://127.0.0.1:8000/api/notes/${id}/`, { headers })
+      .delete(`https://rudrakshi-keeper-app.herokuapp.com/api/notes/${id}/`, { headers })
       .then((res) => res.data)
       .catch((err) => console.log(err));
     setNotes(notes.filter((note) => note.id !== id));
@@ -91,7 +91,7 @@ export const Main = () => {
       Authorization: "Bearer " + localStorage.getItem("access"),
     };
     axios
-      .put(`http://127.0.0.1:8000/api/notes/${updateId}/`, note, { headers })
+      .put(`https://rudrakshi-keeper-app.herokuapp.com/api/notes/${updateId}/`, note, { headers })
       .then((res) => {    
         
         console.log(note, "note");
@@ -114,7 +114,7 @@ export const Main = () => {
       Authorization: "Bearer " + localStorage.getItem("access"),
     };
     axios
-      .post("http://localhost:8000/api/accounts/logout/", token, { headers })
+      .post("https://rudrakshi-keeper-app.herokuapp.com/api/accounts/logout/", token, { headers })
       .then(() => {
         localStorage.removeItem("access");
         localStorage.removeItem("refresh");

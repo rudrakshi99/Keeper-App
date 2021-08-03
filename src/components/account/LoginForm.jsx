@@ -41,7 +41,7 @@ export const LoginForm = () => {
 
         };
         console.log("k")
-         axios.post(`http://127.0.0.1:8000/api/accounts/login/`, login_details)
+         axios.post(`https://rudrakshi-keeper-app.herokuapp.com/api/accounts/login/`, login_details)
             .then((response) => {
             localStorage.setItem("username", response.data.username)
             localStorage.setItem("refresh", response.data.tokens.refresh)   

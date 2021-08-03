@@ -46,11 +46,13 @@ export const RegisterForm = () => {
         };
         
         if(details.password === details.confirmpassword){
-            axios.post(`http://127.0.0.1:8000/api/accounts/register/`, register_details)
-            .then(() =>{ 
+            axios.post(`https://rudrakshi-keeper-app.herokuapp.com/api/accounts/register/`, register_details)
+            .then((res) =>{ 
                 setIsLoading(true)
-                history.goBack()})
-            .catch((err)=>setError("Something went wrong!"))
+                history.push('/')})
+            .catch((err)=>{
+                setIsLoading(true)
+                err.response.status === 400 ? setError("User already exist!") : setError("Something went wrong!")})
         }else{
             ((details.password).length < 6) ? setError("Password must be at least 6 characters long!") :
                                               setError("Passwords do not match!"); 
