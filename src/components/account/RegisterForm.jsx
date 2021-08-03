@@ -54,6 +54,7 @@ export const RegisterForm = () => {
                 setIsLoading(true)
                 err.response.status === 400 ? setError("User already exist!") : setError("Something went wrong!")})
         }else{
+            setIsLoading(true);
             ((details.password).length < 6) ? setError("Password must be at least 6 characters long!") :
                                               setError("Passwords do not match!"); 
         }
