@@ -45,7 +45,7 @@ export const RegisterForm = () => {
 
         };
         
-        if(details.password === details.confirmpassword){
+        if((details.password === details.confirmpassword) && ((details.password).length >= 6)){
             axios.post(`https://rudrakshi-keeper-app.herokuapp.com/api/accounts/register/`, register_details)
             .then((res) =>{ 
                 setIsLoading(true)
