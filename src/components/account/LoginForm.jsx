@@ -48,7 +48,9 @@ export const LoginForm = () => {
             localStorage.setItem("access", response.data.tokens.access)
             history.push('/main')
         })
-            .catch((err)=>setError("Please check your details!"))
+            .catch((err)=>{
+                setIsLoading(true);
+                setError("Please check your details!")})
             
     }
 
