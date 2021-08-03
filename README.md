@@ -10,6 +10,8 @@ It is a note-taking app that allows authenticated users to record plain-text not
 - **Version Control**: Git and GitHub
 - **Hosting**: Netlify
 
+![Screenshot from 2021-08-03 18-15-34](https://user-images.githubusercontent.com/55245862/128018035-e2d428de-8260-4d0c-b460-d536c36546c6.png)
+
 ### Frontend Setup Instructions
 
 - Fork and Clone the repo using
