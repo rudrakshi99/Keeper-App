@@ -12,22 +12,26 @@ export const Main = () => {
   const history = useHistory();
   const [notes, setNotes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [response, setResponse ] = useState(null);
+  const [response, setResponse] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
-    const getNotes = () => {      
+    const getNotes = () => {
       const headers = {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("access"),
       };
       axios
-        .get(`https://rudrakshi-keeper-app.herokuapp.com/api/notes/`, { headers })
-        .then((res) => {
-            setIsLoading(false);
-          setNotes(res.data);          
+        .get(`https://rudrakshi-keeper-app.herokuapp.com/api/notes/`, {
+          headers,
         })
-        .catch((err) => { err.response.status === 401 && window.location.reload() });
+        .then((res) => {
+          setIsLoading(false);
+          setNotes(res.data);
+        })
+        .catch((err) => {
+          err.response.status === 401 && window.location.reload();
+        });
     };
     getNotes();
   }, [response]);
@@ -35,11 +39,14 @@ export const Main = () => {
   axios.interceptors.response.use(undefined, function axiosRetryInspector(err) {
     const refreshToken = localStorage.getItem("refresh");
     console.log(refreshToken);
-    if (err.response.status === 401 && refreshToken) {      
+    if (err.response.status === 401 && refreshToken) {
       axios
-        .post(`https://rudrakshi-keeper-app.herokuapp.com/api/accounts/token/refresh/`, {
-          refresh: refreshToken,
-        })
+        .post(
+          `https://rudrakshi-keeper-app.herokuapp.com/api/accounts/token/refresh/`,
+          {
+            refresh: refreshToken,
+          }
+        )
         .then((res) => res.data)
         .then((res) => {
           err.config.headers["Authorization"] = "Bearer " + res.access;
@@ -52,22 +59,24 @@ export const Main = () => {
     return Promise.reject(err);
   });
 
-  const addNote = (note) => { 
+  const addNote = (note) => {
     setIsLoading(true);
     const headers = {
       "Content-Type": "application/json",
       Authorization: "Bearer " + localStorage.getItem("access"),
     };
     axios
-      .post(`https://rudrakshi-keeper-app.herokuapp.com/api/notes/create/`, note, { headers })
+      .post(
+        `https://rudrakshi-keeper-app.herokuapp.com/api/notes/create/`,
+        note,
+        { headers }
+      )
       .then((res) => {
         // setNotes([...notes, note])
         setResponse(res.data);
         // setNotes((prevState) => prevState.push(res.data));
       })
       .catch((err) => console.log(err));
-
-    
   };
 
   const deleteNote = (id) => {
@@ -76,14 +85,15 @@ export const Main = () => {
       Authorization: "Bearer " + localStorage.getItem("access"),
     };
     axios
-      .delete(`https://rudrakshi-keeper-app.herokuapp.com/api/notes/${id}/`, { headers })
+      .delete(`https://rudrakshi-keeper-app.herokuapp.com/api/notes/${id}/`, {
+        headers,
+      })
       .then((res) => res.data)
       .catch((err) => console.log(err));
     setNotes(notes.filter((note) => note.id !== id));
   };
 
   const updateNote = (note) => {
-    console.log(updateId, "updateId");
     setOpen(false);
     setIsLoading(true);
     const headers = {
@@ -91,17 +101,19 @@ export const Main = () => {
       Authorization: "Bearer " + localStorage.getItem("access"),
     };
     axios
-      .put(`https://rudrakshi-keeper-app.herokuapp.com/api/notes/${updateId}/`, note, { headers })
-      .then((res) => {    
-        
+      .put(
+        `https://rudrakshi-keeper-app.herokuapp.com/api/notes/${updateId}/`,
+        note,
+        { headers }
+      )
+      .then((res) => {
         console.log(note, "note");
-        
-        setNotes(notes.filter(note=>note.id !== updateId))  
+
+        setNotes(notes.filter((note) => note.id !== updateId));
         setResponse(res.data);
-        
       })
       .catch((err) => console.log(err));
-   
+
     console.log("kk");
   };
 
@@ -114,7 +126,11 @@ export const Main = () => {
       Authorization: "Bearer " + localStorage.getItem("access"),
     };
     axios
-      .post("https://rudrakshi-keeper-app.herokuapp.com/api/accounts/logout/", token, { headers })
+      .post(
+        "https://rudrakshi-keeper-app.herokuapp.com/api/accounts/logout/",
+        token,
+        { headers }
+      )
       .then(() => {
         localStorage.removeItem("access");
         localStorage.removeItem("refresh");
@@ -138,16 +154,16 @@ export const Main = () => {
       <Header logout={logout} />
       <CreateArea onAdd={addNote} />
       <div>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <Notes
-          notes={notes}
-          onDelete={deleteNote}
-          OpenPopup={handleClickOpen}
-          setUpdateId={setUpdateId}
-        />
-      )}
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <Notes
+            notes={notes}
+            onDelete={deleteNote}
+            OpenPopup={handleClickOpen}
+            setUpdateId={setUpdateId}
+          />
+        )}
       </div>
       <FormDialog open={open} setOpen={setOpen} updateNote={updateNote} />
       <Footer />

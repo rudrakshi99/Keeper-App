@@ -27,22 +27,6 @@ header h1 {
     font-weight: 200;
 }
 
-.user-info {
-    float: right;
-    display: flex;
-    padding: 33px;
-}
-
-.user-info p {
-    font-family: "McLaren", cursive;
-    margin-right: 15px;
-    font-size: 20px;
-}
-
-.user-info a {
-    text-decoration: none;
-}
-
 footer {
     position: fixed;
     text-align: center;
