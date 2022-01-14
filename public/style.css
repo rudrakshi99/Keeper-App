@@ -11,13 +11,11 @@ html {
 
 body {
     background: #eee;
-    padding: 0 16px;
 }
 
 header {
     padding: 16px 32px;
     background-color: #f5ba13;
-    margin: auto -16px;
     box-shadow: 0 0 10px 0 rgb(0, 0, 0, 0.3);
 }
 
