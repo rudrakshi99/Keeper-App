@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Footer } from "./pages/Footer";
-import { Header } from "./pages/Header";
-import { Notes } from "./pages/Notes";
+import { Footer } from "../components/MainComp/Footer";
+import { Header } from "../components/MainComp/Header";
+import { Notes } from "../components/MainComp/Notes";
 import axios from "axios";
-import { CreateArea } from "./pages/CreateArea";
+import { CreateArea } from "../components/MainComp/CreateArea";
 import { useHistory } from "react-router-dom";
-import FormDialog from "./pages/Popup";
-import { Loading } from "./pages/Loading";
+import FormDialog from "../components/MainComp/Popup";
+import { Loading } from "../components/MainComp/Loading";
 
 export const Main = () => {
   const history = useHistory();

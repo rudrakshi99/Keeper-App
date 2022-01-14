@@ -1,11 +1,9 @@
-import React , { useState , useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Grid, Paper, Avatar, Typography, TextField, Button } from '@material-ui/core'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-import { Header } from '../pages/Header'
-import { Footer } from '../pages/Footer'
 import { Link, useHistory } from 'react-router-dom'
 import axios from 'axios';
-import { Loading } from '../pages/Loading'
+import { Loading } from '../MainComp/Loading'
 
 export const RegisterForm = () => {
     const history = useHistory()
@@ -84,7 +82,7 @@ export const RegisterForm = () => {
     return (
 
         <div>
-            <Header />
+            
             { !isLoading ? <Loading /> :
         <Grid>
             <Paper elevation={10} style={paperStyle}>
@@ -139,7 +137,7 @@ export const RegisterForm = () => {
             </Paper>
         </Grid>
         }
-        <Footer />
+       
         </div>
     )
 }

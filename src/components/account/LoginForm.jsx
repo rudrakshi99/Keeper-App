@@ -1,11 +1,9 @@
-import React, { useState , useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Grid, Paper, Avatar, TextField, Button, Typography } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { Header } from '../pages/Header'
-import { Footer } from '../pages/Footer'
-import { Link , useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import axios from 'axios';
-import { Loading } from '../pages/Loading'
+import { Loading } from '../MainComp/Loading'
 
 export const LoginForm = () => {
     const [details, setDetails] = useState({
@@ -40,7 +38,7 @@ export const LoginForm = () => {
             password : details.password
 
         };
-        console.log("k")
+        
          axios.post(`https://rudrakshi-keeper-app.herokuapp.com/api/accounts/login/`, login_details)
             .then((response) => {
             localStorage.setItem("username", response.data.username)
@@ -71,7 +69,7 @@ export const LoginForm = () => {
     }
     return (
         <div>
-            <Header />
+            
             {!isLoading ? <Loading /> : 
             <Grid>
                 <Paper elevation={10} style={paperStyle}>
@@ -104,7 +102,7 @@ export const LoginForm = () => {
                     </Typography>
                 </Paper>
             </Grid>}
-            <Footer />
+            
     </div>
     )
 }
