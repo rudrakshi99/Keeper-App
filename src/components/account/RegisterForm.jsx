@@ -18,9 +18,9 @@ const useStyles = makeStyles((theme) => ({
     padding: 20,
     width: 500,
     margin: "20px auto",
-    height: "55vh",
     [theme.breakpoints.down(600)]: {
-      width: "350px",
+      width: "330px",
+      minHeight: "50vh",
     },
     [theme.breakpoints.down(330)]: {
       width: "280px",

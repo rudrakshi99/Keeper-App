@@ -16,11 +16,11 @@ import { Loading } from "../MainComp/Loading";
 const useStyles = makeStyles((theme) => ({
   paperStyle: {
     padding: 20,
-    height: "40vh",
     width: 480,
     margin: "20px auto",
     [theme.breakpoints.down(600)]: {
       width: "330px",
+      minHeight: "50vh",
     },
     [theme.breakpoints.down(330)]: {
       width: "280px",
