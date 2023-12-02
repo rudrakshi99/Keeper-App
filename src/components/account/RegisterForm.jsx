@@ -21,10 +21,14 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down(600)]: {
       width: "330px",
       minHeight: "50vh",
+      maxHeight: "477px"
     },
     [theme.breakpoints.down(330)]: {
       width: "280px",
+      maxHeight: "477px"
     },
+    height: "70vh",
+    overflow: "scroll",
   },
   headerStyle: {
     margin: 0,
